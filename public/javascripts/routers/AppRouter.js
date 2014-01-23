@@ -3,7 +3,9 @@ define([
 ], function(Marionette) {
     return Marionette.AppRouter.extend({
         appRoutes: {
-            '': 'list',
+            '': 'listHosts',
+            'hosts': 'listHosts',
+            ':database/databases': 'listDatabases'
         }
     });
 });

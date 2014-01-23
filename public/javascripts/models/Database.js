@@ -1,5 +1,5 @@
 define(['backbone'], function(Backbone) {
-	return Backbone.Model.extend({
-		idAttribute: 'name'
-	});
+    return Backbone.Model.extend({
+        idAttribute: 'name'
+    });
 });

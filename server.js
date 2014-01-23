@@ -29,8 +29,8 @@ if ('development' == app.get('env')) {
 }
 
 require('./src/bongo')(app, {
-	mongo: {
-		dsn: 'mongodb://localhost:27017/admin'
+	db: {
+		dsn: 'mongodb://localhost:27017/bongo'
 	}
 });
 
