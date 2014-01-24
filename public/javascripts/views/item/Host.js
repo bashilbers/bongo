@@ -8,12 +8,18 @@ define([
         template: template,
 
         events: {
+            'click *[role="enter-context"]': 'triggerEnter',
             'click *[role="edit"]': 'triggerEdit',
         	'click *[role="delete"]': 'triggerRemoval'
         },
 
         modelEvents: {
             'change': 'render'
+        },
+
+        triggerEnter: function(e) {
+            e.preventDefault();
+            this.trigger('select:model');
         },
 
         triggerEdit: function(e) {

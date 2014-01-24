@@ -15,7 +15,6 @@ define([
     return Marionette.Controller.extend({
         initialize: function() {
             this.hostCollection = new HostCollection();
-            this.hostCollection.fetch();
 
             this._layout = new DashboardLayout();
             this.appRegion = bongo.request('default:region');
@@ -26,6 +25,7 @@ define([
         },
 
         listHosts: function() {
+            this.hostCollection.fetch();
             var listView = new HostListView({ collection: this.hostCollection });
             this._layout.contentRegion.show(listView);
             listView.on('host:add', _.bind(this.showHostModal, this));
@@ -33,9 +33,14 @@ define([
             listView.on('itemview:edit:model', _.bind(function(view) {
                this.showHostModal(view.model);
             }, this));
+
+            listView.on('itemview:select:model', _.bind(function(view) {
+                bongo.navigate('/hosts/' + view.model.id);
+            }, this));
         },
 
         showHostModal: function(model) {
+            this.hostCollection.fetch();
             var formView = new FormView({ model: model || new HostModel() });
             var modalRegion = bongo.request('modal:region') 
 
@@ -51,10 +56,17 @@ define([
             modalRegion.show(formView);
         },
 
-        listDatabases: function(dbId) {
+        listDatabases: function(hostId) {
+            this.hostCollection.fetch({ success: _.bind(function() {
+                var host = this.hostCollection.get(hostId);
+                host.databases.fetch(); 
+            }, this)});
+
+            /*
             var collection = new DatabaseCollection();
             this._layout.contentRegion.show(new DatabaseListView({ collection: collection }));
             collection.fetch();
+            */
         }
     });
 });

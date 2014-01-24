@@ -15,6 +15,12 @@ var controller = function(app, config) {
         });
     });
 
+    app.get('/api/hosts/:id', function(req, res) {
+        db.collection('hosts').findOne({ _id: req.params.id}, function(err, result) {
+            res.json(result);
+        });
+    });
+
     app.put('/api/hosts/:id', function(req, res) {
         db.collection('hosts').updateById(req.params.id, req.body, {}, function(err, result) {
             console.log(req.params.id, req.body);
@@ -28,10 +34,17 @@ var controller = function(app, config) {
         });
     });
 
-    app.get('/api/:host/databases', function(req, res) {
+    app.get('/api/hosts/:id/databases', function(req, res) {
+        db.collection('hosts').findOne({ _id: req.params.id}, function(err, result) {
+            console.log(result);
+            res.end();
+        });
+
+        /*
         mongo.db(req.param.host).admin.listDatabases(function(err, results) {
             res.json(results['databases']);
         });
+        */
     });
 }
 
