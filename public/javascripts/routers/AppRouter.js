@@ -5,7 +5,7 @@ define([
         appRoutes: {
             '': 'listHosts',
             'hosts': 'listHosts',
-            'hosts/:host': 'listDatabases'
+            'hosts/:host/databases': 'listDatabases'
         }
     });
 });

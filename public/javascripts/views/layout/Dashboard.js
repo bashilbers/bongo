@@ -8,7 +8,8 @@ define([
         regions: {
             headerRegion: '#header',
             sidebarRegion: '#sidebar',
-            contentRegion: '#content'
+            breadCrumbRegion: '#breadcrumbs',
+            contentRegion: '#content-view'
         }
     });
 });

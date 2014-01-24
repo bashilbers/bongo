@@ -6,12 +6,6 @@ define([
     return Marionette.CompositeView.extend({
         itemView: ItemView,
 
-        itemEvents: {
-            'delete': function(event, view) {
-                view.model.destroy();
-             }
-        },
-
         itemViewContainer: "tbody",
 
         template: template,

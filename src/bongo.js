@@ -16,7 +16,7 @@ var controller = function(app, config) {
     });
 
     app.get('/api/hosts/:id', function(req, res) {
-        db.collection('hosts').findOne({ _id: req.params.id}, function(err, result) {
+        db.collection('hosts').findById(req.params.id, function(err, result) {
             res.json(result);
         });
     });
@@ -35,16 +35,12 @@ var controller = function(app, config) {
     });
 
     app.get('/api/hosts/:id/databases', function(req, res) {
-        db.collection('hosts').findOne({ _id: req.params.id}, function(err, result) {
-            console.log(result);
-            res.end();
+        db.collection('hosts').findById(req.params.id, function(err, result) {
+            mongo.db(result.host + ':' + result.port + '/admin').admin.listDatabases(function(err, results) {
+                console.log(results);
+                res.json(results.databases);
+            });
         });
-
-        /*
-        mongo.db(req.param.host).admin.listDatabases(function(err, results) {
-            res.json(results['databases']);
-        });
-        */
     });
 }
 
