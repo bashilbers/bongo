@@ -19,11 +19,9 @@ define([
 
             var parts = Backbone.history.fragment.split('/');
 
-            var c;
+            var composed = '';
             _.each(parts, _.bind(function(val, i) {
-                var composed = (composed ? composed + '/' : '') + val;
-
-                console.log(composed, val);
+                composed = (composed !== '' ? composed + '/' : composed) + val;
                 this.collection.add({
                     url: composed,
                     title: val
