@@ -1,7 +1,7 @@
 define([
-	'backbone.marionette', 
-	'./../item/Database',
-	'hbs!templates/composite/database'
+    'backbone.marionette', 
+    './../item/Database',
+    'hbs!templates/composite/database'
 ], function(Marionette, ItemView, template) {
     return Marionette.CompositeView.extend({
         itemView: ItemView,

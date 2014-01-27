@@ -4,8 +4,7 @@ define([
 ], function(Backbone, DatabaseCollection) {
     return Backbone.Model.extend({
         initialize: function() {
-            this.databases = new DatabaseCollection;
-            this.databases.url = '/api/hosts/' + this.get('_id') + '/databases';
+            this.databases = new DatabaseCollection([], { host: this });
         },
 
         idAttribute: '_id',

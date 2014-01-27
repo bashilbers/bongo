@@ -29,7 +29,8 @@ require.config({
     hbs: '../vendor/require-handlebars-plugin/hbs',
 
     // non bower stuff
-    utils: '../lib/utils'
+    utils: '../lib/utils',
+    ace: '../lib/ace-master/src/ace'
   },
     
   /*

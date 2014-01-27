@@ -4,6 +4,8 @@ define([
     'views/layout/dashboard',
     'collections/Database',
     'views/collection/Database',
+    'views/collection/Collection',
+    'views/collection/Document',
     'views/item/Header',
     'views/item/Sidebar',
     'collections/Host',
@@ -11,9 +13,10 @@ define([
     'views/item/HostForm',
     'models/Host',
     'views/item/Confirmation',
-    'controllers/BreadCrumb'
-], function(bongo, Marionette, DashboardLayout, DatabaseCollection, DatabaseListView, HeaderView, 
-    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController) {
+    'controllers/BreadCrumb',
+    'views/item/Editor'
+], function(bongo, Marionette, DashboardLayout, DatabaseCollection, DatabaseListView, CollectionListView, DocumentListView, HeaderView, 
+    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController, EditorView) {
     return Marionette.Controller.extend({
         initialize: function() {
             this.hostCollection = new HostCollection();
@@ -67,13 +70,14 @@ define([
         listDatabases: function(hostId) {
             this.hostCollection.fetch({ success: _.bind(function() {
                 var host = this.hostCollection.get(hostId);
+
                 var listView = new DatabaseListView({ collection: host.databases });
                 this._layout.contentRegion.show(listView);
                 host.databases.fetch();
 
                 var confirm = new ConfirmationView();
 
-                listView.on('itemview:drop', _.bind(function(view) {
+                listView.on('itemview:delete:model', _.bind(function(view) {
                     this.modalRegion.show(confirm);
 
                     confirm.on('confirmed', _.bind(function() {
@@ -81,9 +85,99 @@ define([
                             msg: 'Database ' + view.model.get('name') + ' dropped',
                             type: 'success'
                         });
+                        view.model.destroy();
                         this.modalRegion.close();
+                    }, this));
                 }, this));
+
+                listView.on('itemview:select:model', _.bind(function(view) {
+                    bongo.navigate('/hosts/' + hostId + '/databases/' + view.model.id + '/collections');
                 }, this));
+
+                listView.on('itemview:copy:model', _.bind(function(view) {
+                    var name = prompt('Enter destination name');
+                    $.ajax({
+                        url: view.model.url() + '/actions/copy',
+                        type: 'POST',
+                        data: { toDb: name },
+                        success: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                }, this));
+
+                listView.on('itemview:rename:model', _.bind(function(view) {
+                    var newName = prompt('Enter new name');
+                    view.model.set('name', newName);
+                    view.model.save();
+                }, this));
+
+                listView.on('itemview:repair:model', _.bind(function(view) {
+                    var confirm = new ConfirmationView({
+                        model: new Backbone.Model({
+                            title: 'Are you sure?',
+                            strong: 'Note',
+                            description: 'When using journaling, there is almost never any need to run repairDatabase.' +
+                                         'In the event of an unclean shutdown, the server will be able restore the data files to a pristine state automatically.'
+                        })
+                    });
+                    this.modalRegion.show(confirm);
+                }, this));
+            }, this)});
+        },
+
+        listCollections: function(hostId, databaseId) {
+            this.hostCollection.fetch({ success: _.bind(function() {
+                var host = this.hostCollection.get(hostId);
+
+                host.databases.fetch({ success: _.bind(function() {
+                    var database = host.databases.get(databaseId);
+
+                    var listView = new CollectionListView({ collection: database.collections });
+                    this._layout.contentRegion.show(listView);
+                    database.collections.fetch();
+
+                    var confirm = new ConfirmationView();
+
+                    listView.on('itemview:drop', _.bind(function(view) {
+                        this.modalRegion.show(confirm);
+
+                        confirm.on('confirmed', _.bind(function() {
+                            bongo.execute('alert', {
+                                msg: 'Collection ' + view.model.get('name') + ' dropped',
+                                type: 'success'
+                            });
+                            view.model.destroy();
+                            this.modalRegion.close();
+                        }, this));
+                    }, this));
+
+                    listView.on('itemview:select:model', _.bind(function(view) {
+                        bongo.navigate('/hosts/' + hostId + '/databases/' + databaseId + '/collections/' + view.model.id + '/documents');
+                    }, this));
+                }, this)})
+            }, this)});
+        },
+
+        listDocuments: function(hostId, databaseId, collectionId) {
+            this.hostCollection.fetch({ success: _.bind(function() {
+                var host = this.hostCollection.get(hostId);
+
+                host.databases.fetch({ success: _.bind(function() {
+                    var database = host.databases.get(databaseId);
+
+                    database.collections.fetch({ success: _.bind(function() {
+                        var collection = database.collections.get(collectionId);
+
+                        var listView = new DocumentListView({ collection: collection.documents });
+                        this._layout.contentRegion.show(listView);
+                        collection.documents.fetch();
+
+                        listView.on('itemview:edit:model', _.bind(function(view) {
+                            this._layout.contentRegion.show(new EditorView({ model: view.model }));
+                        }, this));
+                    }, this)});
+                }, this)});
             }, this)});
         }
     });

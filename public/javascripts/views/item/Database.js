@@ -8,12 +8,42 @@ define([
         template: template,
 
         events: {
-            'click *[role="drop-database"]': 'triggerDrop'
+            'click *[role="enter-context"]': 'triggerEnter',
+            'click *[role="copy"]': 'triggerCopy',
+            'click *[role="delete"]': 'triggerDrop',
+            'click *[role="rename"]': 'triggerRename',
+            'click *[role="getStats"]': 'triggerGetStats',
+            'click *[role="repair"]': 'triggerRepair'
+        },
+
+        triggerEnter: function(e) {
+            e.preventDefault();
+            this.trigger('select:model');
+        },
+
+        triggerCopy: function(e) {
+            e.preventDefault();
+            this.trigger('copy:model');
+        },
+
+        triggerRename: function(e) {
+            e.preventDefault();
+            this.trigger('rename:model');
         },
 
         triggerDrop: function(e) {
             e.preventDefault();
-            this.trigger('drop');
+            this.trigger('delete:model');
+        },
+
+        triggerGetStats: function(e) {
+            e.preventDefault();
+            this.trigger('analyze:model');
+        },
+
+        triggerRepair: function(e) {
+            e.preventDefault();
+            this.trigger('repair:model');
         }
     });
 });
