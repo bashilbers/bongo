@@ -10,7 +10,7 @@ define([
         events: {
             'click *[role="enter-context"]': 'triggerEnter',
             'click *[role="edit"]': 'triggerEdit',
-        	'click *[role="delete"]': 'triggerRemoval'
+            'click *[role="delete"]': 'triggerRemoval'
         },
 
         modelEvents: {
@@ -28,8 +28,8 @@ define([
         },
 
         triggerRemoval: function(e) {
-        	e.preventDefault();
-        	this.model.destroy();
+            e.preventDefault();
+            this.model.destroy();
         }
     });
 });

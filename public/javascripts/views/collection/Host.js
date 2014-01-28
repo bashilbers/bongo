@@ -1,10 +1,13 @@
 define([
     'backbone.marionette', 
     './../item/Host',
+    './../item/DefaultEmptyView',
     'hbs!templates/composite/host'
-], function(Marionette, ItemView, template) {
+], function(Marionette, ItemView, defaultEmptyView, template) {
     return Marionette.CompositeView.extend({
         itemView: ItemView,
+
+        emptyView: defaultEmptyView,
 
         itemViewContainer: "tbody",
 

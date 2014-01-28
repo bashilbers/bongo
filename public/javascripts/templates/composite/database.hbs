@@ -9,3 +9,38 @@
   </thead>
   <tbody></tbody>
 </table>
+
+<h2>Import data</h2>
+<form enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="control-label col-xs-2" for="inputDatabase">Database</label>
+        <div class="col-xs-10">
+            <input type="text" class="form-control" id="inputDatabase" placeholder="Database name" name="database" required>
+            <span class="help-block"><small>Choose the database (free format)</small></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-2" for="collection">Collection</label>
+        <div class="col-xs-10">
+            <input type="text" class="form-control" id="inputCollection" placeholder="Collection name" name="collection" required>
+            <span class="help-block"><small>Choose the collection (free format)</small></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-2" for="inputFile">File</label>
+        <div class="col-xs-10">
+            <input type="file" class="form-control" id="inputFile" name="file" />
+            <span class="help-block"><small>Choose the file (JSON)</small></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-offset-2">
+            <div class="col-xs-10">
+                <button class="btn btn-default" id="mongoimport">import</button>
+            </div>
+        </div>
+    </div>
+</form>

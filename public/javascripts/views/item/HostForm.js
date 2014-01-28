@@ -12,20 +12,24 @@ define([
         },
 
         ui: {
+            inputName: '#inputName',
             inputHost: '#inputHost',
             inputPort: '#inputPort',
             inputUsername: '#inputUsername',
-            inputPassword: '#inputPassword'
+            inputPassword: '#inputPassword',
+            inputDefaultDb: '#inputDefaultDatabase'
         },
 
         save: function(e) {
             e.preventDefault();
 
             this.model.set({
+                name: this.ui.inputName.val(),
                 host: this.ui.inputHost.val(),
                 port: this.ui.inputPort.val(),
                 inputUsername: this.ui.inputUsername.val(),
-                inputPassword: this.ui.inputPassword.val()
+                inputPassword: this.ui.inputPassword.val(),
+                defaultDatabase: this.ui.inputDefaultDb.val()
             });
 
             if(this.model.isValid(true)) {

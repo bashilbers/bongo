@@ -53,7 +53,9 @@ define([
 
         showHostModal: function(model) {
             this.hostCollection.fetch();
-            var formView = new FormView({ model: model || new HostModel() });
+
+            model = model || new HostModel;
+            var formView = new FormView({ model: model });
             
             formView.on('host:form:saved', _.bind(function(view) {
                 if (!this.hostCollection.contains(view.model)) {
@@ -96,20 +98,36 @@ define([
 
                 listView.on('itemview:copy:model', _.bind(function(view) {
                     var name = prompt('Enter destination name');
+                    if (name === '') return;
                     $.ajax({
                         url: view.model.url() + '/actions/copy',
                         type: 'POST',
                         data: { toDb: name },
-                        success: function(xhr) {
-                            console.log(xhr);
-                        }
+                        success: _.bind(function(xhr) {
+                            host.databases.add({ _id: name });
+                            bongo.execute('alert', {
+                                msg: 'Database ' + view.model.get('name') + ' copied',
+                                type: 'success'
+                            });
+                        }, this)
                     });
                 }, this));
 
                 listView.on('itemview:rename:model', _.bind(function(view) {
-                    var newName = prompt('Enter new name');
-                    view.model.set('name', newName);
-                    view.model.save();
+                    var name = prompt('Enter new name');
+                    if (name === '') return;
+                    $.ajax({
+                        url: view.model.url() + '/actions/rename',
+                        type: 'POST',
+                        data: { toDb: name },
+                        success: _.bind(function(xhr) {
+                            bongo.execute('alert', {
+                                msg: 'Database ' + view.model.get('name') + ' renamed to ' + name,
+                                type: 'success'
+                            });
+                            view.model.set('name', name);
+                        }, this)
+                    });
                 }, this));
 
                 listView.on('itemview:repair:model', _.bind(function(view) {
@@ -123,6 +141,36 @@ define([
                     });
                     this.modalRegion.show(confirm);
                 }, this));
+
+                listView.on('import:initialized', function(data) {
+                    console.log(host.url());
+                    console.log(data);
+
+                    function progressHandlingFunction(e){
+                        if(e.lengthComputable){
+                            console.log(e.loaded, e.total);
+                        }
+                    }
+
+                    $.ajax({
+                        url: host.url() + '/import',
+                        type: 'POST',
+                        xhr: function() {
+                            var myXhr = $.ajaxSettings.xhr();
+                            if (myXhr.upload) { // Check if upload property exists
+                                myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+                            }
+                            return myXhr;
+                        },
+                        beforeSend: function() {},
+                        success: function() {},
+                        error: function() {},
+                        data: data.formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                });
             }, this)});
         },
 

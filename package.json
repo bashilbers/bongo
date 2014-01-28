@@ -12,6 +12,7 @@
     "mongoskin": "0.6.*",
     "bower": "1.2.*",
     "underscore": "1.5.*",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "fileupload": "*"
   }
 }

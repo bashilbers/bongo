@@ -16,6 +16,10 @@ define([
             'click *[role="repair"]': 'triggerRepair'
         },
 
+        modelEvents: {
+            'change': 'render'
+        },
+
         triggerEnter: function(e) {
             e.preventDefault();
             this.trigger('select:model');
