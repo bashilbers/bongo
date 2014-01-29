@@ -9,7 +9,6 @@
     "commit": "96db4f16d3a18219823605447090c3cd68e8f1e2"
   },
   "_source": "git://github.com/SlexAxton/require-handlebars-plugin.git",
-  "_target": "~0.7.0",
-  "_originalSource": "require-handlebars-plugin",
-  "_direct": true
+  "_target": "0.7.*",
+  "_originalSource": "require-handlebars-plugin"
 }

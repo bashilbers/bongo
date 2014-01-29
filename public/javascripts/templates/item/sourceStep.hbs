@@ -1,0 +1,26 @@
+<h3>Source</h3>
+
+<p>First step to importing is defining where to get the data from.</p>
+
+<div class="wizard-input-section">
+    <select name="type" class="form-control fancy-select">
+        <option value="">Choose a source</option>
+        <option value="upload">File upload</option>
+        <option value="url">URL</option>
+        <option value="input">Direct input</option>
+    </select>
+</div>
+
+<div class="wizard-input-section">
+    <select name="content-type" class="form-control fancy-select">
+        <option value="" selected>Choose a content-type</option>
+        <optgroup label="Structured">
+            <option value="JSON">JSON</option>
+        </optgroup>
+
+        <optgroup label="Flat">
+            <option value="CSV">CSV</option>
+            <option value="TSV">TSV</option>
+        </optgroup>
+    </select>
+</div>

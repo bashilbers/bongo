@@ -1,0 +1,49 @@
+<h3>Destination</h3>
+
+<div class="wizard-input-section">
+    <p>
+        Please choose the services you'd like Panopta to
+        monitor.  Any service you select will be given a default
+        check frequency of 1 minute.
+    </p>
+
+    <div class="form-group">
+        <label class="control-label col-xs-2" for="inputDatabase">Database</label>
+        <div class="col-xs-10">
+            <input type="text" class="form-control" id="inputDatabase" placeholder="Database name" name="database" required>
+            <span class="help-block"><small>Choose the database (free format)</small></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-2" for="collection">Collection</label>
+        <div class="col-xs-10">
+            <input type="text" class="form-control" id="inputCollection" placeholder="Collection name" name="collection" required>
+            <span class="help-block"><small>Choose the collection (free format)</small></span>
+        </div>
+    </div>
+</div>
+
+<div class="wizard-error">
+    <div class="alert alert-error">
+        <strong>There was a problem</strong> with your submission.
+        Please correct the errors and re-submit.
+    </div>
+</div>
+
+<div class="wizard-failure">
+    <div class="alert alert-error">
+        <strong>There was a problem</strong> submitting the form.
+        Please try again in a minute.
+    </div>
+</div>
+
+<div class="wizard-success">
+    <div class="alert alert-success">
+        <span class="create-server-name"></span>Server Created <strong>Successfully.</strong>
+    </div>
+
+    <a class="btn btn-default create-another-server">Create another server</a>
+    <span style="padding:0 10px">or</span>
+    <a class="btn btn-success im-done">Done</a>
+</div>

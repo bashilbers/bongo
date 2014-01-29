@@ -24,13 +24,18 @@ require.config({
     "backbone.marionette.subrouter": '../vendor/Marionette.SubRouter/backbone.marionette.subrouter.min',
     "backbone.localstorage": '../vendor/backbone.localstorage/backbone.localstorage',
     "backbone.wreqr": '../vendor/backbone.wreqr/lib/amd/backbone.wreqr.min',
+    "backbone.picky": '../vendor/backbone.picky/lib/amd/backbone.picky.min',
     "backbone.babysitter": '../vendor/backbone.babysitter/lib/amd/backbone.babysitter.min',
     handlebars: '../vendor/handlebars/handlebars',
     hbs: '../vendor/require-handlebars-plugin/hbs',
+    selectize: '../vendor/selectize/dist/js/selectize.min',
+    sifter: '../vendor/sifter/sifter',
+    microplugin: '../vendor/microplugin/src/microplugin',
 
     // non bower stuff
     utils: '../lib/utils',
-    ace: '../lib/ace-master/src/ace'
+    ace: '../lib/ace-master/src/ace',
+    "marionette.gauntlet": '../lib/marionette.gauntlet'    
   },
     
   /*
@@ -48,6 +53,11 @@ require.config({
     },
 
     unveil: {
+      deps: ['jquery'],
+      exports: 'jQuery'
+    },
+
+    chosen: {
       deps: ['jquery'],
       exports: 'jQuery'
     },

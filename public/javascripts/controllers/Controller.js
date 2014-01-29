@@ -14,9 +14,12 @@ define([
     'models/Host',
     'views/item/Confirmation',
     'controllers/BreadCrumb',
-    'views/item/Editor'
+    'views/item/Editor',
+    'marionette.gauntlet',
+    'views/layout/Wizard',
+    'views/item/SourceStep'
 ], function(bongo, Marionette, DashboardLayout, DatabaseCollection, DatabaseListView, CollectionListView, DocumentListView, HeaderView, 
-    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController, EditorView) {
+    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController, EditorView, Wizard, WizardView, SourceStepView) {
     return Marionette.Controller.extend({
         initialize: function() {
             this.hostCollection = new HostCollection();
@@ -25,6 +28,10 @@ define([
             this.appRegion = bongo.request('default:region');
             this.appRegion.show(this._layout);
             this.modalRegion = bongo.request('modal:region');
+
+
+            this.showImportModal();
+
 
             bongo.reqres.setHandler('layout:get:breadcrumb:region', _.bind(function() {
                 return this._layout.breadCrumbRegion;
@@ -67,6 +74,22 @@ define([
             }, this));
 
             this.modalRegion.show(formView);
+        },
+
+        showImportModal: function() {
+            var importModel = new Backbone.Model();
+            var wizard = new Wizard({
+                workflowSteps: [
+                    { title: 'Source', view: new SourceStepView({ model: importModel }) },
+                    { title: 'Data', view: new SourceStepView({ model: importModel }) },
+                    { title: 'Destination', view: new SourceStepView({ model: importModel }) }
+                ]
+            });
+
+            this.modalRegion.show(new WizardView({  
+                title: 'Import data',
+                wizard: wizard 
+            }));
         },
 
         listDatabases: function(hostId) {

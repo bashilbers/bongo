@@ -19,7 +19,8 @@
     "Marionette.SubRouter": "*",
     "animate.css": "*",
     "handlebars": "1.3.*",
-    "require-handlebars-plugin": "0.7.*"
+    "require-handlebars-plugin": "0.7.*",
+    "selectize": "*"
   },
   "devDependencies": {
   
