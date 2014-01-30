@@ -16,6 +16,19 @@ define([
             if(!this.wizard.getCurrentStep().get('state')) {
                 this.wizard.getCurrentStep().set('state', 'active');
             }
+
+            this.wizard.on('next', _.bind(function(next, curr) {
+                this.$el.find('.progress-bar').css('width', (100/this.wizard.getSteps().length) + '%');
+                curr.set('state', 'already-visited');
+                this.renderStep(next);
+            }, this));
+
+            this.wizard.on('previous', _.bind(function(prev, curr) {
+                curr.set('state', 'already-visited');
+                this.renderStep(prev);
+            }, this));
+
+            this.menu = new WizardMenuView({ collection: this.wizard.getSteps(), wizard: this.wizard });
         },
 
         template: template,
@@ -26,9 +39,36 @@ define([
             contentRegion: '.wizard-card-container'
         },
 
+        events: {
+            'click *[role="back"]': 'back',
+            'click *[role="next"]': 'next',
+            'click *[role="submit"]': 'submit'
+        },
+
+        back: function() {
+            this.wizard.previousStep();
+        },
+
+        next: function() {
+            this.wizard.nextStep();
+        },
+
+        submit: function() {
+            alert('submitted!?');
+        },
+
         onRender: function() {
-            this.navRegion.show(new WizardMenuView({ collection: this.wizard.getSteps() }));
-            this.contentRegion.show(this.wizard.getCurrentStep().get('view')); 
+            this.renderCurrentStep();
+        },
+
+        renderCurrentStep: function() {
+            this.renderStep(this.wizard.getCurrentStep()); 
+        },
+
+        renderStep: function(step) {
+            step.set('state', 'active');
+            this.contentRegion.show(step.get('view'));
+            this.navRegion.show(this.menu);
         }
     });
 });

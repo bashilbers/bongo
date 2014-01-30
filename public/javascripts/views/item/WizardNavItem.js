@@ -7,10 +7,20 @@ define([
         tagName: 'li',
         className: 'wizard-nav-item',
 
+        events: {
+            'click a': 'navigate'
+        },
+
+        navigate: function(e) {
+            e.preventDefault();
+            this.trigger('click');
+        }
+
         initialize: function() {
         	switch(this.model.get('state')) {
         		case 'already-visited':
         			this.$el.addClass('already-visited');
+                    this.$el.removeClass('active');
         			break;
 
         		case 'active':

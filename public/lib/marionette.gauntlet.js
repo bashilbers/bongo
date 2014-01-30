@@ -140,12 +140,14 @@
             // Move to the next step in the workflow
             nextStep: function () {
                 var nextStep = this.steps.getNext();
+                this.trigger('next', nextStep, this.getCurrentStep());
                 this.moveTo(nextStep);
             },
 
             // Move to the previous step in the workflow
             previousStep: function () {
                 var previousStep = this.steps.getPrevious();
+                this.trigger('previous', previousStep, this.getCurrentStep());
                 this.moveTo(previousStep);
             },
 

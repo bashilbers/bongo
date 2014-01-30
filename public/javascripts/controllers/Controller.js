@@ -17,9 +17,11 @@ define([
     'views/item/Editor',
     'marionette.gauntlet',
     'views/layout/Wizard',
-    'views/item/SourceStep'
+    'views/item/SourceStep',
+    'views/item/DataStep'
 ], function(bongo, Marionette, DashboardLayout, DatabaseCollection, DatabaseListView, CollectionListView, DocumentListView, HeaderView, 
-    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController, EditorView, Wizard, WizardView, SourceStepView) {
+    SidebarView, HostCollection, HostListView, FormView, HostModel, ConfirmationView, BreadCrumbController, EditorView, Wizard, 
+    WizardView, SourceStepView, DataStepView) {
     return Marionette.Controller.extend({
         initialize: function() {
             this.hostCollection = new HostCollection();
@@ -81,7 +83,7 @@ define([
             var wizard = new Wizard({
                 workflowSteps: [
                     { title: 'Source', view: new SourceStepView({ model: importModel }) },
-                    { title: 'Data', view: new SourceStepView({ model: importModel }) },
+                    { title: 'Data', view: new DataStepView({ model: importModel }) },
                     { title: 'Destination', view: new SourceStepView({ model: importModel }) }
                 ]
             });

@@ -10,6 +10,7 @@
     "backbone-amd": "*",
     "backbone.babysitter": "*",
     "backbone.wreqr": "*",
+    "backbone.picky": "*",
     "underscore-amd": "*",
     "backbone.marionette": "*",
     "backbone.localstorage": "*",
