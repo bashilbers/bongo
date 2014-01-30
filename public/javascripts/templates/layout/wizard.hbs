@@ -1,33 +1,27 @@
-<div class="modal-dialog wizard-dialog">
-    <div class="modal-content wizard-content">
-        <div class="modal-header wizard-header">
+<div class="modal-dialog wizard">
+    <div class="modal-content">
+        <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3 class="modal-title wizard-title">{{ title }}</h3>
-            <span class="wizard-subtitle">{{ subtitle }}</span>
+            <h3 class="modal-title">{{ title }}</h3>
+            <span class="modal-subtitle">{{ subtitle }}</span>
         </div>
 
-        <div class="modal-body wizard-body row">
-            <div class="pull-left wizard-steps">
-                <div class="wizard-nav-container">
-                    <ul class="nav wizard-nav-list"></ul>
-                </div>
-                <div class="wizard-progress-container">
-                    <div class="progress progress-striped">
-                        <div class="progress-bar" style="width: 0%;"></div>
-                    </div>
-                </div>
+        <div class="modal-body">
+            <nav class="nav"></nav>
+                    
+            <div class="progress progress-striped">
+                <div class="progress-bar" style="width: 0%;"></div>
             </div>
-
-            <form class="form-horizontal">
-                <div class="wizard-card-container"></div>
-                    <div class="modal-footer">
-                        <div class="btn-group-single pull-right">
-                            <button class="btn" type="button" role="back">Back</button>
-                            <button class="btn btn-primary" type="button" role="next">Next</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            
+            <section class="content"></section>
         </div>
-    </div>
-</div>
+
+        <div class="modal-footer">
+            <div class="btn-group-single">
+                <button class="btn" type="button" role="back">Back</button>
+                <button class="btn btn-primary" type="button" role="next">Next</button>
+                <button class="btn btn-primary hidden" type="button" role="submit">Submit</button>
+            </div>
+        </div> <!-- ./modal-
+    </div> <!-- ./modal-content -->
+</div> <!-- ./model-dialog -->

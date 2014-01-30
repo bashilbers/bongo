@@ -90,14 +90,9 @@ li.wizard-nav-item {
     background-color:#08C;
 }
 
-.wizard-nav-item .already-visited:hover {
-    background-color:#08C;
-}
-
 .wizard-nav-list li.active > a {
     background-color:#08C;
 }
-
 
 /* WIZARD CONTENT */
 .wizard-body form {
@@ -112,10 +107,6 @@ li.wizard-nav-item {
     width: 100%;
 }
 
-.wizard-card-container {
-    margin-left: 28%;
-}
-
 /* WIZARD CARDS */
 .wizard-error,
 .wizard-failure,
@@ -123,14 +114,14 @@ li.wizard-nav-item {
 .wizard-loading {
     border-top: 1px solid #EEE;
     display:none;
-    padding:35px;
-    padding-top:20px;
-    overflow-y:auto;
+    padding-left: 35px;
+    padding-top: 20px;
+    overflow-y: auto;
 }
 
 .wizard-card {
     border-top: 1px solid #EEE;
-    padding: 35px;
+    padding-left: 35px;
     padding-top: 5px;
 }
 

@@ -101,9 +101,9 @@
                 this.onSteps = {};
 
                 if (options.currentStep) {
-                    this._setCurrentStep(options.currentStep);
+                    this.setCurrentStep(options.currentStep);
                 } else {
-                    this._setCurrentStep(this.steps.at(0)); // sane fallback
+                    this.setCurrentStep(this.steps.at(0)); // sane fallback
                 }
             },
 
@@ -121,7 +121,7 @@
                 this.steps.reset(workflowSteps);
 
                 if (currentStepId && (currentStep = this.steps.get(currentStepId))) {
-                    this._setCurrentStep(currentStep);
+                    this.setCurrentStep(currentStep);
                 }
             },
 
@@ -211,7 +211,7 @@
                 var done = _.bind(function (doChangeStep) {
                     if (doChangeStep) {
                         // set the current step, then run all the step callbacks
-                        this._setCurrentStep(step, function () {
+                        this.setCurrentStep(step, function () {
                             var key = step.get("key");
                             this._runStepCallbacks(key);
                             
@@ -238,7 +238,7 @@
 
             // Set the current step and optionally run a callback
             // function after the current step has been set.
-            _setCurrentStep: function (step, cb) {
+            setCurrentStep: function (step, cb) {
                 var key = step.get("key");
 
                 this.trigger("step", key);

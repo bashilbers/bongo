@@ -14,7 +14,7 @@ define([
         navigate: function(e) {
             e.preventDefault();
             this.trigger('click');
-        }
+        },
 
         initialize: function() {
         	switch(this.model.get('state')) {

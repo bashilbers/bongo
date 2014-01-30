@@ -18,7 +18,11 @@ define([
             }
 
             this.wizard.on('next', _.bind(function(next, curr) {
-                this.$el.find('.progress-bar').css('width', (100/this.wizard.getSteps().length) + '%');
+                var progressedSteps = this.wizard.getSteps().filter(function(step) {
+                    return (step.get('state') === 'already-visited' || step.get('state') === 'active') ? true : false;
+                });
+
+                this.$el.find('.progress-bar').css('width', ((100/this.wizard.getSteps().length) * progressedSteps.length) + '%');
                 curr.set('state', 'already-visited');
                 this.renderStep(next);
             }, this));
@@ -29,14 +33,21 @@ define([
             }, this));
 
             this.menu = new WizardMenuView({ collection: this.wizard.getSteps(), wizard: this.wizard });
+
+            this.menu.on('itemview:click', _.bind(function(view) {
+                if(view.model.get('state') !== 'already-visited') return;
+
+                this.wizard.getCurrentStep().set('state', 'already-visited');
+                this.wizard.setCurrentStep(view.model);
+                this.renderCurrentStep();
+            }, this));
         },
 
         template: template,
 
         regions: {
-            navRegion: '.wizard-nav-container',
-            progressRegion: '.wizard-progress-container',
-            contentRegion: '.wizard-card-container'
+            navRegion: '.nav',
+            contentRegion: '.content'
         },
 
         events: {
@@ -65,7 +76,22 @@ define([
             this.renderStep(this.wizard.getCurrentStep()); 
         },
 
+        renderFirstStep: function(step) {
+            this.$el.find('*[role="back"]').addClass('hidden');
+        },
+
+        renderLastStep: function(step) {
+            this.$el.find('*[role="next"]').addClass('hidden');
+            this.$el.find('*[role="submit"]').removeClass('hidden');
+        },
+
         renderStep: function(step) {
+            if (step === this.wizard.getSteps().first())
+                this.renderFirstStep();
+            
+            if (step === this.wizard.getSteps().last())
+                this.renderLastStep();
+
             step.set('state', 'active');
             this.contentRegion.show(step.get('view'));
             this.navRegion.show(this.menu);
